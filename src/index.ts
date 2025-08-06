@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import trackingRoutes from "./routes/public.js";
 import adminRoutes from "./routes/admin.js";
 import { cors } from "hono/cors";
+import { logger } from "hono/logger";
 
 const app = new Hono();
 
@@ -20,12 +21,15 @@ app.use(
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
+
+app.use("*", logger());
+
 app.get("/", (c) => {
   const env = process.env.NODE_ENV;
   return c.text(`Hello Hono! from ${env?.toUpperCase() || "Development!"}`);
 });
 
-app.route("/tracking", trackingRoutes);
+app.route("/public/tracking", trackingRoutes);
 app.route("/admin", adminRoutes);
 
 serve(
