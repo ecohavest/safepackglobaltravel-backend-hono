@@ -9,7 +9,13 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: "*",
+    origin: [
+      process.env.FRONTEND_URL!,
+      "http://localhost:4173",
+      "http://localhost:5173",
+      "https://safepackglobaltravel.com",
+      "https://www.safepackglobaltravel.com",
+    ],
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
