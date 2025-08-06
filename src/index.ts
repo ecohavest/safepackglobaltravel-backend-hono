@@ -7,7 +7,19 @@ import { logger } from "hono/logger";
 
 const app = new Hono();
 
-app.use("*", cors());
+app.use(
+  "*",
+  cors({
+    origin: [
+      "https://safepackglobaltravel.com",
+      "http://localhost:3000",
+      "http://localhost:5173",
+    ],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 app.use("*", logger());
 
