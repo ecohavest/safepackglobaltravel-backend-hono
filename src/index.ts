@@ -2,8 +2,18 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import trackingRoutes from "./routes/public.js";
 import adminRoutes from "./routes/admin.js";
+import { cors } from "hono/cors";
 
 const app = new Hono();
+
+app.use(
+  "*",
+  cors({
+    origin: "*",
+    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 app.get("/", (c) => {
   const env = process.env.NODE_ENV;
   return c.text(`Hello Hono! from ${env?.toUpperCase() || "Development!"}`);
