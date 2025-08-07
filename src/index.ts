@@ -11,12 +11,18 @@ app.use(
   "/*",
   cors({
     origin: (origin, c) => {
+      console.log(origin);
       return origin.endsWith(".safepackglobaltravel.com")
         ? origin
-        : "http://localhost:4173";
+        : "https://safepackglobaltravel.com";
     },
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: [
+      "Content-Length",
+      "X-Custom-Header",
+      "Allow-Access-Control-Origin",
+    ],
     credentials: true,
   })
 );
