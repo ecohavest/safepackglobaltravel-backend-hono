@@ -8,13 +8,13 @@ import { logger } from "hono/logger";
 const app = new Hono();
 
 app.use(
-  "*",
+  "/*",
   cors({
-    origin: [
-      "https://safepackglobaltravel.com",
-      "http://localhost:3000",
-      "http://localhost:5173",
-    ],
+    origin: (origin, c) => {
+      return origin.endsWith(".safepackglobaltravel.com")
+        ? origin
+        : "http://localhost:4173";
+    },
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,
