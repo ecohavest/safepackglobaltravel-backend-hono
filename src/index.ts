@@ -6,6 +6,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
 const app = new Hono();
+app.use("*", logger());
 
 app.use(
   "/*",
@@ -27,10 +28,9 @@ app.use(
   })
 );
 
-app.use("*", logger());
-
 app.get("/", (c) => {
   const env = process.env.NODE_ENV;
+  console.log("Hello Hono! from ", env?.toUpperCase() || "Development!");
   return c.text(`Hello Hono! from ${env?.toUpperCase() || "Development!"}`);
 });
 
@@ -43,6 +43,7 @@ serve(
     port: 3000,
   },
   (info) => {
+    console.log("Ready to serve on port 3000");
     console.log(`Server is running on http://localhost:${info.port}`);
   }
 );
