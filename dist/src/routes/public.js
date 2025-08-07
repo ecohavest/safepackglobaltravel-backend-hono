@@ -4,6 +4,7 @@ import { trackings } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 const router = new Hono();
 router.get("/:trackingNumber", async (c) => {
+    console.log("Tracking number:", c.req.param("trackingNumber"));
     try {
         const { trackingNumber } = c.req.param();
         const tracking = await db.query.trackings.findFirst({
